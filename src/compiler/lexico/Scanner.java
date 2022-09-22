@@ -84,6 +84,7 @@ public class Scanner {
                 case 3:
                     if (isDigit(currentChar)){
                         estado = 3;
+                        term +=currentChar;
                     } else if (!isChar(currentChar)) {
                         estado =4;
                     }
@@ -100,8 +101,8 @@ public class Scanner {
                     return token;
 
                 case 5:
-                    term += currentChar;
                     token = new Token();
+                    term += currentChar;
                     token.setType(Token.TK_OPERATOR);
                     token.setText(term);
                     return token;
@@ -119,11 +120,11 @@ public class Scanner {
         return (c >='a' && c<= 'z') || (c >='A' && c<= 'Z');
     }
 
-    private boolean isSpace(char c){
-        return c =='>' || c== '<' || c=='=' || c== '/' || c=='*';
+    private boolean isOperator(char c){
+        return c =='>' || c== '<' || c=='=' || c== '/' || c=='*' || c=='+' || c=='-';
     }
 
-    private boolean isOperator(char c){
+    private boolean isSpace(char c){
         return c ==' ' || c== '\t' || c=='\n' || c== '\r' ;
     }
 

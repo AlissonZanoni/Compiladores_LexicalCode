@@ -22,7 +22,7 @@ public class Main {
             } while (token != null);
 
         } catch (LexicalException ex){
-            System.out.println("Lexical ERROR"+ex.getMessage());
+            System.out.println("Lexical ERROR "+ex.getMessage());
         }
 
         catch (Exception ex){
