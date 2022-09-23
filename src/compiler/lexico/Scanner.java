@@ -46,6 +46,7 @@ public class Scanner {
                         estado = 1;
                         break;
                     } else if (isDigit(currentChar)) {
+                        term +=currentChar;
                         estado = 3;
                         break;
                     }
@@ -125,7 +126,7 @@ public class Scanner {
     }
 
     private boolean isSpace(char c){
-        return c ==' ' || c== '\t' || c=='\n' || c== '\r' ;
+        return c ==' ' || c== '\t' || c=='\n' || c== '\r';
     }
 
     private char nextChar(){
@@ -139,5 +140,4 @@ public class Scanner {
     private void back(){
         pos--;
     }
-
 }

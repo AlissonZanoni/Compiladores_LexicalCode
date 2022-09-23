@@ -26,7 +26,7 @@ public class Main {
         }
 
         catch (Exception ex){
-            System.out.println("Generic ERROR"+ex.getMessage());
+            System.out.println("Generic ERROR "+ex.getMessage());
         }
     }
 }
