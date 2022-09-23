@@ -1,0 +1,8 @@
+#1 arrumar o char;
+#2 criar o nome da variavel;
+#3 criar o literal;
+#4 ajustar o fluxo Q16 remover o Q18;
+#5 ajustar no Q19 o segundo < e remover o sinal < do =
+#6 Remover o $$
+#7 alterar o comentário 0800 para um char não utilizado;
+#8 Q35 alterar a ordem !=
