@@ -7,6 +7,7 @@ public class Token {
     public static final int TK_OPERATOR = 2;
     public static final int TK_PONCTUATION = 3;
     public static final int TK_ASSING = 4;
+    public static final int TK_PONTOFINAL = 5;
 
     private int type;
     private String text;
