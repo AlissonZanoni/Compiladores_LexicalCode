@@ -12,17 +12,27 @@ public class Token {
     private int type;
     private String text;
 
+    private int line;
 
-    public Token(int type, String text){
+
+    public Token(int type, String text, int line){
         super();
         this.type = type;
         this.text = text;
+        this.line = line;
     }
 
     public Token(){
         super();
     }
 
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
 
     public int getType() {
         return type;
@@ -42,7 +52,7 @@ public class Token {
 
     @Override
     public String toString(){
-        return "Token [type="+ type + ", text= " +text + "]";
+        return "Token [type="+ type + ", text= " +text +", line= "+line +"]";
     }
 
 }

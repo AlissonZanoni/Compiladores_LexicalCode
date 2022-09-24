@@ -12,6 +12,9 @@ public class Scanner {
     private int estado;
     private int pos;
 
+    int contLine =1;
+
+
     public Scanner(String filename){
         try {
 
@@ -38,6 +41,7 @@ public class Scanner {
         token = new Token();
 
         estado =0;
+
         while(true){
             currentChar = nextChar();
 
@@ -49,16 +53,18 @@ public class Scanner {
 
                         token.setType(Token.TK_IDENT);
                         token.setText(term);
+                        token.setLine(contLine);
+
                         break;
                     } else if (isDigit(currentChar)) {
                         term +=currentChar;
 
                         token.setType(Token.TK_NUMBER);
                         token.setText(term);
+                        token.setLine(contLine);
                         break;
                     }
                     else if (isSpace(currentChar)){
-                        estado=200;
                         return token;
                     }
                     else if(isArqFinalLine(currentChar)){
@@ -69,10 +75,19 @@ public class Scanner {
 
                         token.setType(Token.TK_OPERATOR);
                         token.setText(term);
+                        token.setLine(contLine);
                     }
                     else if (isEndLine(currentChar)){
-                        estado=200;
+
+                        term +=currentChar;
+
+                        token.setType(Token.TK_PONTOFINAL);
+                        token.setText(term);
+                        token.setLine(contLine);
+
+                        contLine++;
                         return token;
+
                     }
                     else {
                         throw new LexicalException("Simbolo Desconhecido, fala em portugues fi!");
@@ -96,10 +111,6 @@ public class Scanner {
 
     private boolean isSpace(char c){
     return c ==' ';
-    }
-
-    private boolean isPontoFinal(char c){
-        return c==';';
     }
 
     private boolean isArqFinalLine(char c){
