@@ -5,6 +5,7 @@ import compiler.exceptions.LexicalException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 public class Scanner {
 
@@ -34,13 +35,13 @@ public class Scanner {
         Token token;
         char currentChar;
         String term="";
+
         if(isEOF()){
             return null;
         }
 
         token = new Token();
-
-        estado =0;
+        estado = 0;
 
         while(true){
             currentChar = nextChar();
@@ -49,26 +50,204 @@ public class Scanner {
                 case 0:
 
                     if (isChar(currentChar)){
+
                         term +=currentChar;
 
-                        token.setType(Token.TK_IDENT);
-                        token.setText(term);
-                        token.setLine(contLine);
+                        while (nextChar() != ' '){
+                            back();
+                            term +=nextChar();
+                        }
 
-                        break;
-                    } else if (isDigit(currentChar)) {
-                        term +=currentChar;
+                        term = term.toLowerCase(Locale.ROOT);
+                        if (term.matches("[a-z]*")){
 
-                        token.setType(Token.TK_NUMBER);
-                        token.setText(term);
-                        token.setLine(contLine);
-                        break;
+                            if (term.equals("void")) {
+                                token.setType(Token.TK_VOID);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("while")) {
+                                token.setType(Token.TK_WHILE);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("return")) {
+                                token.setType(Token.TK_RETURN);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("string")) {
+                                token.setType(Token.TK_STRING);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("if")) {
+                                token.setType(Token.TK_IF);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("float")) {
+                                token.setType(Token.TK_FLOAT);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("i")) {
+                                token.setType(Token.TK_I);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("do")) {
+                                token.setType(Token.TK_DO);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("inicio")) {
+                                token.setType(Token.TK_INICIO);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("int")) {
+                                token.setType(Token.TK_INT);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("main")) {
+                                token.setType(Token.TK_MAIN);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("else")) {
+                                token.setType(Token.TK_ELSE);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("double")) {
+                                token.setType(Token.TK_DOUBLE);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("for")) {
+                                token.setType(Token.TK_FOR);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("fim")) {
+                                token.setType(Token.TK_FIM);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("cin")) {
+                                token.setType(Token.TK_CIN);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("cout")) {
+                                token.setType(Token.TK_COUT);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("char")) {
+                                token.setType(Token.TK_CHAR);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("callfuncao")) {
+                                token.setType(Token.TK_CALLFUNCAO);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else {
+                                token.setType(Token.TK_IDENT);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                        }
+
+                        else {
+                            throw new LexicalException("Palavra Desconhecida: "+term+" na linha "+contLine);
+                        }
+
+
                     }
+
+                    else if (isDigit(currentChar)) {
+
+                        term +=currentChar;
+
+                        while (nextChar() != ' '){
+                            back();
+                            term +=nextChar();
+                        }
+
+                        if (term.matches("[0-9]*")){
+                            token.setType(Token.TK_NUMBER);
+                            token.setText(term);
+                            token.setLine(contLine);
+                            back();
+                            break;
+                        }
+                        else if (term.matches("[a-zA-Z__0-9]*")) {
+                            throw new LexicalException("Simbolo Desconhecido: "+term+ " na linha "+contLine);
+                        }
+                        else if (term.matches("^\\d{1,9}(?:\\.\\d{1,2})?$")) {
+                            token.setType(Token.TK_NUMBERFLOAT);
+                            token.setText(term);
+                            token.setLine(contLine);
+                            back();
+                            break;
+                        }
+                        else {
+                            throw new LexicalException("Simbolo Desconhecido: "+term+ " na linha "+contLine);
+                        }
+
+                    }
+
                     else if (isSpace(currentChar)){
                         return token;
                     }
-                    else if(isArqFinalLine(currentChar)){
 
+                    else if(isArqFinalLine(currentChar)){
+                        break;
                     }
 
                     else if (isSimbols(currentChar) && flagOP==0) {
@@ -311,10 +490,10 @@ public class Scanner {
                         return token;
 
                     }
+
                     else {
-                        throw new LexicalException("Simbolo Desconhecido, fala em portugues fi!");
+                        throw new LexicalException("OPS NEM EINSTEIN ENTENDERIA ISSO ");
                     }
-                    break;
             }
         }
     }
@@ -326,10 +505,6 @@ public class Scanner {
     private boolean isChar(char c){
         return (c >='a' && c<= 'z') || (c >='A' && c<= 'Z');
     }
-
-//    private boolean isMenos(char c){
-//        return c=='-';
-//    }
 
     private boolean isSimbols(char c){
         return c=='-' || c=='+' || c=='<' || c=='>' || c=='*' || c=='/' || c=='=' || c=='{' || c=='}' || c==':' || c=='$' || c==',' || c=='(' || c==')' || c=='!' ;

@@ -53,13 +53,10 @@ public class Token {
     public static final int TK_MENOSMENOS = 49;
     public static final int TK_MENOS = 50;
 
-
-
     private int type;
     private String text;
 
     private int line;
-
 
     public Token(int type, String text, int line){
         super();
@@ -100,5 +97,4 @@ public class Token {
     public String toString(){
         return "[Token="+ type + ", text= " +text +", line= "+line +"]";
     }
-
 }

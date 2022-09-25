@@ -4,7 +4,6 @@ import compiler.exceptions.LexicalException;
 import compiler.lexico.Scanner;
 import compiler.lexico.Token;
 
-import java.util.concurrent.ExecutionException;
 
 public class Main {
 
