@@ -22,11 +22,11 @@ public class Main {
             } while (token != null);
 
         } catch (LexicalException ex){
-            System.out.println("Lexical ERROR "+ex.getMessage());
+            System.out.println("\n[Lexical ERROR] "+ex.getMessage());
         }
 
         catch (Exception ex){
-            System.out.println("Generic ERROR "+ex.getMessage());
+            System.out.println("\n[Generic ERROR] "+ex.getMessage());
         }
     }
 }
