@@ -9,8 +9,10 @@ public class Token {
     public static final int TK_NUMBER = 5;
     public static final int TK_NUMBERFLOAT = 6;
     public static final int TK_IDENT = 7;
-    public static final int TK_IDENTCHAR = 8;
-    public static final int TK_NOMEDAVARIAVEL = 9;
+    public static final int TK_NOMEDOCHAR = 8;
+
+    //public static final int TK_NOMEDAVARIAVEL = 9; não foi necessário.
+
     public static final int TK_NOMEDASTRING = 10;
     public static final int TK_MAIN = 11;
     public static final int TK_LITERAL = 12;

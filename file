@@ -1,3 +1,6 @@
+#STR# ;
+&t& ;
+"comentário" ;
 123 432.12 3409.32 ;
-main void int float double alisson ;
+main void int float double alisson integer ;
 ++ -- <= >> != ;

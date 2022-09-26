@@ -15,6 +15,9 @@ public class Scanner {
     private int contLine =1;
     private int flagOP =0;
 
+//    char teste = &t& ;
+//    String teste = #teste# ;
+//    literal = "teste" ;
 
     public Scanner(String filename){
         try {
@@ -189,6 +192,13 @@ public class Scanner {
                             }
                             else if (term.equals("callfuncao")) {
                                 token.setType(Token.TK_CALLFUNCAO);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else if (term.equals("integer")) {
+                                token.setType(Token.TK_INTEGER);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
@@ -478,6 +488,56 @@ public class Scanner {
                             }
                     }
 
+                    else if(isValorChar(currentChar)){
+                        term +=currentChar;
+
+                        while (nextChar() != '&'){
+                            back();
+                            term +=nextChar();
+                        }
+
+                        term+="&";
+
+                        if (term.length()== 3){
+                            token.setType(Token.TK_NOMEDOCHAR);
+                            token.setText(term);
+                            token.setLine(contLine);
+                        }else {
+                            throw new LexicalException("Char com tamanho inválido: "+term+" na linha "+contLine);
+                        }
+                    }
+
+                    else if(isValorString(currentChar)){
+
+                        term +=currentChar;
+
+                        while (nextChar() != '#'){
+                            back();
+                            term +=nextChar();
+                        }
+
+                        token.setText(term+"#");
+                        token.setType(Token.TK_NOMEDASTRING);
+                        token.setLine(contLine);
+                        break;
+                    }
+
+                    else if(isLiteral(currentChar)){
+
+                        term +=currentChar;
+
+                        while (nextChar() != '"'){
+                            back();
+                            term +=nextChar();
+                        }
+
+                        token.setText(term+"");
+                        token.setType(Token.TK_LITERAL);
+                        token.setLine(contLine);
+                        break;
+                    }
+
+
                     else if (isEndLine(currentChar)){
 
                         term +=currentChar;
@@ -517,6 +577,19 @@ public class Scanner {
     private boolean isArqFinalLine(char c){
         return c=='\r' || c=='\n';
     }
+
+    private boolean isValorString(char c){
+        return c=='#';
+    }
+
+    private boolean isValorChar(char c){
+        return c=='&';
+    }
+
+    private boolean isLiteral(char c){
+        return c=='"';
+    }
+
 
     private boolean isEndLine(char c){
         return c==';';
