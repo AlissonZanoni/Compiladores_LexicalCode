@@ -502,16 +502,14 @@ public class Scanner {
                     }
 
                     else if(isValorChar(currentChar)){
-                        term +=currentChar;
 
                         while (nextChar() != '&'){
                             back();
                             term +=nextChar();
                         }
 
-                        term+="&";
 
-                        if (term.length()== 3){
+                        if (term.length()== 1){
                             token.setType(Token.TK_NOMEDOCHAR);
                             token.setText(term);
                             token.setLine(contLine);
@@ -522,14 +520,12 @@ public class Scanner {
 
                     else if(isValorString(currentChar)){
 
-                        term +=currentChar;
-
                         while (nextChar() != '#'){
                             back();
                             term +=nextChar();
                         }
 
-                        token.setText(term+"#");
+                        token.setText(term);
                         token.setType(Token.TK_NOMEDASTRING);
                         token.setLine(contLine);
                         break;
