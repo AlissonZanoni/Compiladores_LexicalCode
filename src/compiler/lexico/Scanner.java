@@ -15,9 +15,6 @@ public class Scanner {
     private int contLine =1;
     private int flagOP =0;
 
-//    char teste = &t& ;
-//    String teste = #teste# ;
-//    literal = "teste" ;
 
     public Scanner(String filename){
         try {
@@ -204,12 +201,15 @@ public class Scanner {
                                 back();
                                 break;
                             }
-                            else {
+                            else if(term.length() <= 15){
                                 token.setType(Token.TK_IDENT);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
                                 break;
+                            }
+                            else {
+                                throw new LexicalException("Identificador possui mais de 15 digitos: "+term+" na linha "+contLine);
                             }
                         }
 
@@ -230,21 +230,34 @@ public class Scanner {
                         }
 
                         if (term.matches("[0-9]*")){
-                            token.setType(Token.TK_NUMBER);
-                            token.setText(term);
-                            token.setLine(contLine);
-                            back();
-                            break;
+
+                            if (Integer.parseInt(term) <= 100){
+                                token.setType(Token.TK_NUMBER);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else {
+                                throw new LexicalException("Número inteiro não pode ser maior que 100: "+term+ " na linha "+contLine);
+                            }
+
                         }
                         else if (term.matches("[a-zA-Z__0-9]*")) {
                             throw new LexicalException("Simbolo Desconhecido: "+term+ " na linha "+contLine);
                         }
                         else if (term.matches("^\\d{1,9}(?:\\.\\d{1,2})?$")) {
-                            token.setType(Token.TK_NUMBERFLOAT);
-                            token.setText(term);
-                            token.setLine(contLine);
-                            back();
-                            break;
+
+                            if (Float.parseFloat(term) <= 100){
+                                token.setType(Token.TK_NUMBERFLOAT);
+                                token.setText(term);
+                                token.setLine(contLine);
+                                back();
+                                break;
+                            }
+                            else {
+                                throw new LexicalException("Número float maior que 100: "+term+ " na linha "+contLine);
+                            }
                         }
                         else {
                             throw new LexicalException("Simbolo Desconhecido: "+term+ " na linha "+contLine);
@@ -531,11 +544,55 @@ public class Scanner {
                             term +=nextChar();
                         }
 
-                        token.setText(term+"");
+                        token.setText(term+'"');
                         token.setType(Token.TK_LITERAL);
                         token.setLine(contLine);
                         break;
                     }
+
+                    else if (isComentario(currentChar)) {
+                        term +=currentChar;
+                        term +=nextChar();
+                        String ajudinha;
+                        char quebralinha;
+
+                        if (term.equals("@@")){
+
+                            quebralinha=nextChar();
+
+                            while (quebralinha != '@'){
+                                quebralinha=nextChar();
+                                if (quebralinha=='\r'){
+                                    contLine++;
+                                }
+                            }
+                            contLine++;
+                            ajudinha= Character.toString(quebralinha)+nextChar();
+                            back();
+
+                            if (ajudinha.equals("@@")){
+                                term="";
+                                nextChar();
+                                nextChar();
+                                break;
+                            }
+                            else {
+                                throw new LexicalException("Comentário em bloco não finalizado");
+                            }
+                        }
+
+                        else {
+                            quebralinha=nextChar();
+                            while (quebralinha != '\r'){
+                                quebralinha=nextChar();
+                            }
+                            nextChar();
+                            term="";
+                            contLine++;
+                            break;
+                        }
+                    }
+
 
 
                     else if (isEndLine(currentChar)){
@@ -550,6 +607,7 @@ public class Scanner {
                         return token;
 
                     }
+
 
                     else {
                         throw new LexicalException("OPS NEM EINSTEIN ENTENDERIA ISSO ");
@@ -588,6 +646,10 @@ public class Scanner {
 
     private boolean isLiteral(char c){
         return c=='"';
+    }
+
+    private boolean isComentario(char c){
+        return c=='@';
     }
 
 
