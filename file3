@@ -4,6 +4,6 @@ teste@@
 #STR# ;
 &t& ;
 "comentário" ;
-100 100 100.12 3409.32 ;
-main void int float double alissonzanonidasilva integer ;
+100 100 100 34 ;
+main void int float double alisson integer ;
 ++ -- <= >> != ;

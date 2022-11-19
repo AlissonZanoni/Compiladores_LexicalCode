@@ -589,8 +589,6 @@ public class Scanner {
                         }
                     }
 
-
-
                     else if (isEndLine(currentChar)){
 
                         term +=currentChar;

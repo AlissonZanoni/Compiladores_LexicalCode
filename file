@@ -1,4 +1,12 @@
 void main { ;
+
 inicio ;
+
+for ( i = 1 ; i < 10 ; ++ 1 ) ;
+
+{ ;
+cout << i ++ ;
+} ;
+
 fim ;
 } ;

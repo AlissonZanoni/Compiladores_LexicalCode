@@ -1,9 +1,9 @@
-@@teste
-teste@@
-@teste
-#STR# ;
-&t& ;
-"comentário" ;
-100 100 100.12 3409.32 ;
-main void int float double alissonzanonidasilva integer ;
-++ -- <= >> != ;
+void main { ;
+
+for ( i = 1 ; i < 10 ; ++ 1 ) ;
+
+{ ;
+cout << 1 ++ ;
+} ;
+
+} ;
