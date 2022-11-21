@@ -103,13 +103,13 @@ public class Scanner {
                                 back();
                                 break;
                             }
-                            else if (term.equals("i")) {
-                                token.setType(Token.TK_I);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                back();
-                                break;
-                            }
+//                            else if (term.equals("i")) {
+//                                token.setType(Token.TK_I);
+//                                token.setText(term);
+//                                token.setLine(contLine);
+//                                back();
+//                                break;
+//                            }
                             else if (term.equals("do")) {
                                 token.setType(Token.TK_DO);
                                 token.setText(term);

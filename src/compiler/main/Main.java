@@ -22,7 +22,7 @@ public class Main {
                 token = sc.nextToken();
                 if(token != null){
                     System.out.println(token);
-                    if (token.getType() != 40){
+                    if (token.getType() != 0){
                         listaTokens.add(token.getType());
                     }
                 }
@@ -39,7 +39,6 @@ public class Main {
             Integer nextToken =0;
 
             while (itemAnalise != 47){
-
 
                 //Terminais
                 if (itemAnalise >= 1 && itemAnalise <= 50){
@@ -73,7 +72,7 @@ public class Main {
 
                 //Não terminais
                 else if(itemAnalise >= 51 && itemAnalise <=82){
-                    int terminal = listaTokens.get(0);
+                    int terminal = listaTokens.get(nextToken);
                     int naoTerminal = itemAnalise;
 
                     try {
@@ -104,6 +103,8 @@ public class Main {
                     System.exit(0);
                 }
             }
+            System.out.println("Análise Sintática realizada com Sucesso");
+            System.exit(0);
 
         } catch (LexicalException ex){
             System.out.println("\n[Lexical ERROR] "+ex.getMessage());
