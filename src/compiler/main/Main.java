@@ -104,7 +104,49 @@ public class Main {
                 }
             }
             System.out.println("Análise Sintática realizada com Sucesso");
+            System.out.println("\n"+listaTokens);
+
+
+            for(int z = 0; z<= listaTokens.size(); z++){
+                if (listaTokens.get(z).equals(7) && listaTokens.get(z+1).equals(32)){
+                    if(!listaTokens.get(z+2).equals(5)){
+                        System.out.println("\n"+"Erro semantico no token "+listaTokens.get(z+2));
+                    }
+
+                } else if (listaTokens.get(z).equals(7) && listaTokens.get(z + 1) != 30 &&
+                            listaTokens.get(z).equals(7) && listaTokens.get(z + 1) != 35 &&
+                            listaTokens.get(z).equals(7) && listaTokens.get(z + 1) != 33 &&
+                            listaTokens.get(z).equals(7) && listaTokens.get(z + 1) != 29 &&
+                            listaTokens.get(z).equals(7) && listaTokens.get(z + 1) != 40){
+                    System.out.println("\n"+"Erro semantico no token "+listaTokens.get(z+1));
+
+                } else if(listaTokens.get(z).equals(36) || listaTokens.get(z).equals(49)){
+                    if(!listaTokens.get(z+1).equals(5)){
+                        System.out.println("\n"+"Erro semantico no token "+listaTokens.get(z+1));
+                    }
+                }
+
+//                else if (listaTokens.get(z).equals(7) && listaTokens.get(z-1).equals(3)) {
+//                    if(listaTokens.get(z+1).equals(32)){
+//
+//                        if(listaTokens.get(z+2).equals(5)){
+//                            System.out.println("\n"+"Erro semantico no token "+listaTokens.get(z+2));
+//                        }
+//                        else if (listaTokens.get(z+2).equals(7)) {
+//                            if (listaTokens.get(z+3).equals(37) || listaTokens.get(z+3).equals(50) ||
+//                                    listaTokens.get(z+3).equals(44) || listaTokens.get(z+3).equals(42)){
+//
+//                            }
+//                        }
+//                    }
+//                }
+
+            }
+
             System.exit(0);
+
+
+
 
         } catch (LexicalException ex){
             System.out.println("\n[Lexical ERROR] "+ex.getMessage());
