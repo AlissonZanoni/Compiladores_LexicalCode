@@ -1,13 +1,5 @@
-void main { ;
-inicio ;
-for ( i = 1 ; i < 10 ; ++ 1 ) { cout << "teste" ; } ; fim } ;
+void main {
+inicio
+;
 
-
-void main { inicio
-
-
-string a ;
-
-a = a+5 ;
-
-fim } ;
+}

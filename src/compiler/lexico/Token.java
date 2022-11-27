@@ -20,6 +20,7 @@ public class Token {
     public static final int TK_INT = 14;
     public static final int TK_INICIO = 15;
     public static final int TK_IF = 16;
+
     public static final int TK_I = 7;
     public static final int TK_FOR = 18;
     public static final int TK_FLOAT = 19;

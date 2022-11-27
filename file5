@@ -1,0 +1,12 @@
+void main {
+
+inicio
+
+for (i = 10 ; i < 10 ; ++ 1 )
+{
+cout << "numero" ;
+}
+
+;
+fim
+}

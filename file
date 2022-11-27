@@ -1,1 +1,7 @@
-void main { inicio for ( i = a ; i < 10 ; ++ 5 ) { cout << "teste" ; } ; fim } ;
+void main {
+numero : string ;
+numero : string ;
+inicio
+;
+fim
+}

@@ -52,10 +52,12 @@ public class Scanner {
                     if (isChar(currentChar)){
 
                         term +=currentChar;
+                        char proxLetra = nextChar();
 
-                        while (nextChar() != ' '){
-                            back();
-                            term +=nextChar();
+                        while (proxLetra != ' ' && proxLetra != '\n' && proxLetra != '\r' ){
+                            term +=proxLetra;
+                            proxLetra = nextChar();
+
                         }
 
                         term = term.toLowerCase(Locale.ROOT);
@@ -66,42 +68,42 @@ public class Scanner {
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("while")) {
                                 token.setType(Token.TK_WHILE);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("return")) {
                                 token.setType(Token.TK_RETURN);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("string")) {
                                 token.setType(Token.TK_STRING);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("if")) {
                                 token.setType(Token.TK_IF);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("float")) {
                                 token.setType(Token.TK_FLOAT);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
 //                            else if (term.equals("i")) {
 //                                token.setType(Token.TK_I);
@@ -115,98 +117,98 @@ public class Scanner {
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("inicio")) {
                                 token.setType(Token.TK_INICIO);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("int")) {
                                 token.setType(Token.TK_INT);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("main")) {
                                 token.setType(Token.TK_MAIN);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("else")) {
                                 token.setType(Token.TK_ELSE);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("double")) {
                                 token.setType(Token.TK_DOUBLE);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("for")) {
                                 token.setType(Token.TK_FOR);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("fim")) {
                                 token.setType(Token.TK_FIM);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("cin")) {
                                 token.setType(Token.TK_CIN);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("cout")) {
                                 token.setType(Token.TK_COUT);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("char")) {
                                 token.setType(Token.TK_CHAR);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("callfuncao")) {
                                 token.setType(Token.TK_CALLFUNCAO);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if (term.equals("integer")) {
                                 token.setType(Token.TK_INTEGER);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else if(term.length() <= 15){
                                 token.setType(Token.TK_IDENT);
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else {
                                 throw new LexicalException("Identificador possui mais de 15 digitos: "+term+" na linha "+contLine);
@@ -236,7 +238,7 @@ public class Scanner {
                                 token.setText(term);
                                 token.setLine(contLine);
                                 back();
-                                break;
+                                return token;
                             }
                             else {
                                 throw new LexicalException("Número inteiro não pode ser maior que 100: "+term+ " na linha "+contLine);
@@ -266,239 +268,388 @@ public class Scanner {
                     }
 
                     else if (isSpace(currentChar)){
-                        return token;
+                        break;
                     }
 
-                    else if(isArqFinalLine(currentChar)){
+                    else if(isBarraN(currentChar)){
+                        contLine++;
+                        break;
+                    }
+
+                    else if(isBarraR(currentChar)){
                         break;
                     }
 
                     else if (isSimbols(currentChar) && flagOP==0) {
                             term +=currentChar;
-                            char aux = nextChar();
-                            flagOP++;
 
-                            //MENOSMENOS
-                            if(currentChar =='-' && aux == '-'){
-                                token.setType(Token.TK_MENOSMENOS);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //MENOS
-                            else if (currentChar =='-' && aux == ' ') {
-                                token.setType(Token.TK_MENOS);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //MAISMAIS
-                            else if(currentChar =='+' && aux == '+'){
-                                token.setType(Token.TK_MAISMAIS);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //MAIS
-                            else if (currentChar =='+' && aux == ' ') {
-                                token.setType(Token.TK_MAIS);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //MAIORMAIOR
-                            else if (currentChar =='>' && aux == '>') {
-                                token.setType(Token.TK_MAIORMAIOR);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //MENORMENOR
-                            else if (currentChar =='<' && aux == '<') {
-                                token.setType(Token.TK_MENORMENOR);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //MAIOR
-                            else if (currentChar =='>' && aux == ' ') {
-                                token.setType(Token.TK_MAIOR);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //MENOR
-                            else if (currentChar =='<' && aux == ' ') {
-                                token.setType(Token.TK_MENOR);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
 
-                            //MAIORIGUAL
-                            else if (currentChar =='>' && aux == '=') {
-                                token.setType(Token.TK_MAIORIGUAL);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //MENORIGUAL
-                            else if (currentChar =='<' && aux == '=') {
-                                token.setType(Token.TK_MENORIGUAL);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //IGUALIGUAL
-                            else if (currentChar == '=' && aux == '='){
-                                token.setType(Token.TK_IGUALIGUAL);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //IGUAL
-                            else if (currentChar == '=' && aux ==' ') {
-                                token.setType(Token.TK_IGUAL);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CHAVEFECHADA
-                            else if (currentChar == '}' && aux ==' ') {
-                                token.setType(Token.TK_CHAVEFECHADA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CHAVEABERTA
-                            else if (currentChar == '{' && aux ==' ') {
-                                token.setType(Token.TK_CHAVEABERTA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CHAVEFECHADA
-                            else if (currentChar == '}' && aux ==' ') {
-                                token.setType(Token.TK_CHAVEFECHADA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //DOISPONTOS
-                            else if (currentChar == ':' && aux ==' ') {
-                                token.setType(Token.TK_DOISPONTO);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //BARRA
-                            else if (currentChar == '/' && aux ==' ') {
-                                token.setType(Token.TK_BARRA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //VIRGULA
-                            else if (currentChar == ',' && aux ==' ') {
-                                token.setType(Token.TK_VIRGULA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //ASTERISCO
-                            else if (currentChar == '*' && aux ==' ') {
-                                token.setType(Token.TK_ASTERISCO);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CONCHETEFECHADO
-                            else if (currentChar == ')' && aux ==' ') {
-                                token.setType(Token.TK_CONCHETESFECHADO);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CONCHETEABERTO
-                            else if (currentChar == '(' && aux ==' ') {
-                                token.setType(Token.TK_CONCHETESABERTO);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //BARRA
-                            else if (currentChar == '/' && aux ==' ') {
-                                token.setType(Token.TK_BARRA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //CIFRAO
-                            else if (currentChar == '$' && aux ==' ') {
-                                token.setType(Token.TK_CIFRAO);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            //DIFERENTE IGUAL
-                            else if (currentChar == '!' && aux =='=') {
-                                token.setType(Token.TK_DIFERENTEIGUAL);
-                                token.setText(term+aux);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                break;
-                            }
-                            //BARRA
-                            else if (currentChar == '/' && aux ==' ') {
-                                token.setType(Token.TK_BARRA);
-                                token.setText(term);
-                                token.setLine(contLine);
-                                flagOP=0;
-                                back();
-                                break;
-                            }
-                            else {
-                                throw new LexicalException("Simbolo Desconhecido: "+term+aux+" na linha "+contLine);
-                            }
+                            //Verificar se está no final do arquivo para não chamar a função nextchar e quebrar o sistema
+                          if(isEOF()){
+                             if (currentChar == '/') {
+                                  token.setType(Token.TK_BARRA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                             else if (currentChar =='-') {
+                                 token.setType(Token.TK_MENOS);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+
+                             else if (currentChar =='+') {
+                                 token.setType(Token.TK_MAIS);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+
+                             else if (currentChar =='>') {
+                                 token.setType(Token.TK_MAIOR);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //MENOR
+                             else if (currentChar =='<') {
+                                 token.setType(Token.TK_MENOR);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+
+                             else if (currentChar == '=') {
+                                 token.setType(Token.TK_IGUAL);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //CHAVEFECHADA
+                             else if (currentChar == '}') {
+                                 token.setType(Token.TK_CHAVEFECHADA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //CHAVEABERTA
+                             else if (currentChar == '{') {
+                                 token.setType(Token.TK_CHAVEABERTA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //CHAVEFECHADA
+                             else if (currentChar == '}') {
+                                 token.setType(Token.TK_CHAVEFECHADA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //DOISPONTOS
+                             else if (currentChar == ':') {
+                                 token.setType(Token.TK_DOISPONTO);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //BARRA
+                             else if (currentChar == '/') {
+                                 token.setType(Token.TK_BARRA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //VIRGULA
+                             else if (currentChar == ',') {
+                                 token.setType(Token.TK_VIRGULA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //ASTERISCO
+                             else if (currentChar == '*') {
+                                 token.setType(Token.TK_ASTERISCO);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //CONCHETEFECHADO
+                             else if (currentChar == ')') {
+                                 token.setType(Token.TK_CONCHETESFECHADO);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 break;
+                             }
+                             //CONCHETEABERTO
+                             else if (currentChar == '(') {
+                                 token.setType(Token.TK_CONCHETESABERTO);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //BARRA
+                             else if (currentChar == '/') {
+                                 token.setType(Token.TK_BARRA);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+                             //CIFRAO
+                             else if (currentChar == '$') {
+                                 token.setType(Token.TK_CIFRAO);
+                                 token.setText(term);
+                                 token.setLine(contLine);
+                                 flagOP=0;
+                                 return token;
+                             }
+
+
+                          }
+                          else {
+                              char aux = nextChar();
+                              flagOP++;
+
+                              //MENOSMENOS
+                              if(currentChar =='-' && aux == '-'){
+                                  token.setType(Token.TK_MENOSMENOS);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //MENOS
+                              else if (currentChar =='-') {
+                                  token.setType(Token.TK_MENOS);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //MAISMAIS
+                              else if(currentChar =='+' && aux == '+'){
+                                  token.setType(Token.TK_MAISMAIS);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //MAIS
+                              else if (currentChar =='+') {
+                                  token.setType(Token.TK_MAIS);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //MAIORMAIOR
+                              else if (currentChar =='>' && aux == '>') {
+                                  token.setType(Token.TK_MAIORMAIOR);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //MENORMENOR
+                              else if (currentChar =='<' && aux == '<') {
+                                  token.setType(Token.TK_MENORMENOR);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //MAIOR
+                              else if (currentChar =='>') {
+                                  token.setType(Token.TK_MAIOR);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //MENOR
+                              else if (currentChar =='<') {
+                                  token.setType(Token.TK_MENOR);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+
+                              //MAIORIGUAL
+                              else if (currentChar =='>' && aux == '=') {
+                                  token.setType(Token.TK_MAIORIGUAL);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //MENORIGUAL
+                              else if (currentChar =='<' && aux == '=') {
+                                  token.setType(Token.TK_MENORIGUAL);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //IGUALIGUAL
+                              else if (currentChar == '=' && aux == '='){
+                                  token.setType(Token.TK_IGUALIGUAL);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //IGUAL
+                              else if (currentChar == '=') {
+                                  token.setType(Token.TK_IGUAL);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CHAVEFECHADA
+                              else if (currentChar == '}') {
+                                  token.setType(Token.TK_CHAVEFECHADA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CHAVEABERTA
+                              else if (currentChar == '{') {
+                                  token.setType(Token.TK_CHAVEABERTA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CHAVEFECHADA
+                              else if (currentChar == '}') {
+                                  token.setType(Token.TK_CHAVEFECHADA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //DOISPONTOS
+                              else if (currentChar == ':') {
+                                  token.setType(Token.TK_DOISPONTO);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //BARRA
+                              else if (currentChar == '/') {
+                                  token.setType(Token.TK_BARRA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //VIRGULA
+                              else if (currentChar == ',') {
+                                  token.setType(Token.TK_VIRGULA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //ASTERISCO
+                              else if (currentChar == '*') {
+                                  token.setType(Token.TK_ASTERISCO);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CONCHETEFECHADO
+                              else if (currentChar == ')') {
+                                  token.setType(Token.TK_CONCHETESFECHADO);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CONCHETEABERTO
+                              else if (currentChar == '(') {
+                                  token.setType(Token.TK_CONCHETESABERTO);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //BARRA
+                              else if (currentChar == '/') {
+                                  token.setType(Token.TK_BARRA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //CIFRAO
+                              else if (currentChar == '$') {
+                                  token.setType(Token.TK_CIFRAO);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              //DIFERENTE IGUAL
+                              else if (currentChar == '!' && aux =='=') {
+                                  token.setType(Token.TK_DIFERENTEIGUAL);
+                                  token.setText(term+aux);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  return token;
+                              }
+                              //BARRA
+                              else if (currentChar == '/') {
+                                  token.setType(Token.TK_BARRA);
+                                  token.setText(term);
+                                  token.setLine(contLine);
+                                  flagOP=0;
+                                  back();
+                                  return token;
+                              }
+                              else {
+                                  throw new LexicalException("Simbolo Desconhecido: "+term+aux+" na linha "+contLine);
+                              }
+                          }
+
                     }
 
                     else if(isValorChar(currentChar)){
@@ -528,7 +679,7 @@ public class Scanner {
                         token.setText(term);
                         token.setType(Token.TK_NOMEDASTRING);
                         token.setLine(contLine);
-                        break;
+                        return token;
                     }
 
                     else if(isLiteral(currentChar)){
@@ -543,7 +694,7 @@ public class Scanner {
                         token.setText(term+'"');
                         token.setType(Token.TK_LITERAL);
                         token.setLine(contLine);
-                        break;
+                        return token;
                     }
 
                     else if (isComentario(currentChar)) {
@@ -556,7 +707,7 @@ public class Scanner {
 
                             quebralinha=nextChar();
 
-                            while (quebralinha != '@'){
+                            while (quebralinha != '\n'){
                                 quebralinha=nextChar();
                                 if (quebralinha=='\r'){
                                     contLine++;
@@ -570,7 +721,7 @@ public class Scanner {
                                 term="";
                                 nextChar();
                                 nextChar();
-                                break;
+                                return token;
                             }
                             else {
                                 throw new LexicalException("Comentário em bloco não finalizado");
@@ -585,21 +736,17 @@ public class Scanner {
                             nextChar();
                             term="";
                             contLine++;
-                            break;
+                            return token;
                         }
                     }
 
                     else if (isEndLine(currentChar)){
-
                         term +=currentChar;
 
                         token.setType(Token.TK_PONTOFINAL);
                         token.setText(term);
                         token.setLine(contLine);
-
-                        contLine++;
                         return token;
-
                     }
 
 
@@ -626,8 +773,12 @@ public class Scanner {
     return c ==' ';
     }
 
-    private boolean isArqFinalLine(char c){
-        return c=='\r' || c=='\n';
+    private boolean isBarraR(char c){
+        return c=='\r';
+    }
+
+    private boolean isBarraN(char c){
+        return c=='\n';
     }
 
     private boolean isValorString(char c){
