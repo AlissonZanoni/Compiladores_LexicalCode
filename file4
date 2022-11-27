@@ -1,13 +1,12 @@
 void main {
-
+@@Erro semantico utilizando uma variavel que não foi declarada @@
 a : string ;
 c : string ;
-i : integer ;
 y : integer ;
 
 inicio
 
-for (i = 1 ; i < 10 ; ++ 1 )
+for (i = 1 ; y < 10 ; ++ 1 )
 {
 cout << "numero" ;
 }

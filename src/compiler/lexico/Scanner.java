@@ -713,32 +713,13 @@ public class Scanner {
                                     contLine++;
                                 }
                             }
-                            contLine++;
-                            ajudinha= Character.toString(quebralinha)+nextChar();
-                            back();
-
-                            if (ajudinha.equals("@@")){
-                                term="";
-                                nextChar();
-                                nextChar();
-                                return token;
-                            }
-                            else {
-                                throw new LexicalException("Comentário em bloco não finalizado");
-                            }
-                        }
-
-                        else {
-                            quebralinha=nextChar();
-                            while (quebralinha != '\r'){
-                                quebralinha=nextChar();
-                            }
-                            nextChar();
                             term="";
-                            contLine++;
                             return token;
+                            }
                         }
-                    }
+
+
+
 
                     else if (isEndLine(currentChar)){
                         term +=currentChar;

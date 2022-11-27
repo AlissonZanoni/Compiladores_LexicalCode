@@ -1,8 +1,13 @@
 void main {
+@@Programa passando sem erros para validar geração de código e otimização @@
+a : string ;
+c : string ;
+i : integer ;
+y : integer ;
 
 inicio
 
-for (i = 10 ; i < 10 ; ++ 1 )
+for (i = 1 ; y < 10 ; ++ 1 )
 {
 cout << "numero" ;
 }

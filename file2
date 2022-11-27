@@ -1,5 +1,17 @@
 void main {
-inicio
-;
+@@Erro lexico não pode ter números no nome das variaveis@@
+a321321 : string ;
+c : string ;
+i : integer ;
+y : integer ;
 
+inicio
+
+for (i = 5 ; i < y ; ++ 1 )
+{
+cout << "numero" ;
+}
+
+;
+fim
 }

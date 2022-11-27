@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Scanner sc = new Scanner("file4");
+            Scanner sc = new Scanner("file5");
             Token token = null;
             do {
                 token = sc.nextToken();
@@ -264,7 +264,48 @@ public class Main {
             System.out.println("\nFim análise semantica");
             String codigoVisualG = "";
 
+
+
+//            inicio da otimização
+            for(int i = 0; i<listaTokens.size();i++){
+
+                int otimizacao =0;
+
+                //verifico se o token é uma variavel e está dentro do bloco de declaração de variaveis
+                  if (listaTokens.get(i) == 7 && listaTokens.get(i+1) == 41) {
+
+                    String a = listaTextTokens.get(i);
+
+                    //percorro minha lista de tokens para verificar se ela está sendo utiliza em outra parte do código se não vai ser encontrada 1 vez só e removido os
+                      // proximos 4 tokens seguidos
+                    for (int z = 0; z < listaTextTokens.size(); z++) {
+                        if (a.equals(listaTextTokens.get(z))) {
+                            otimizacao++;
+                        }
+                    }
+
+                    if (otimizacao == 1) {
+
+                        listaTokens.remove(i);
+                        listaTokens.remove(i);
+                        listaTokens.remove(i);
+                        listaTokens.remove(i);
+
+                        listaTextTokens.remove(i);
+                        listaTextTokens.remove(i);
+                        listaTextTokens.remove(i);
+                        listaTextTokens.remove(i);
+                        i--;
+                    }
+
+                }
+            }
+
+
+
+            //inicio da geração e otimização de código
             for(int i = 0; i<listaTokens.size(); i++){
+
 
                 switch (listaTokens.get(i)) {
 

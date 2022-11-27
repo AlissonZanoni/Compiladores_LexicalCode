@@ -1,0 +1,17 @@
+void main {
+@@Erro semantico não pode atribuir um número a uma variavel do tipo string @@
+a : string ;
+c : string ;
+i : integer ;
+y : integer ;
+
+inicio
+
+for (a = i ; y < 10 ; ++ 1 )
+{
+cout << "numero" ;
+}
+
+;
+fim
+}
